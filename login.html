@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In — Rootine</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="auth-page">
+    <!-- Visual Side -->
+    <div class="auth-visual">
+      <div class="auth-visual-bg">
+        <div class="auth-blob auth-blob-1"></div>
+        <div class="auth-blob auth-blob-2"></div>
+      </div>
+      <div class="auth-visual-content">
+        <div class="auth-visual-icon">🌿</div>
+        <h2 class="auth-visual-title">Welcome back, grower.</h2>
+        <p class="auth-visual-subtitle">Your garden has been waiting. Let's see how your habits have grown.</p>
+        <ul class="auth-features-list">
+          <li>Track any habit — mind, body, or soul</li>
+          <li>Visual growth streaks & heatmaps</li>
+          <li>Your data synced across all devices</li>
+          <li>Gentle nudges, never guilt trips</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Form Side -->
+    <div class="auth-form-side">
+      <div class="auth-form-wrap">
+        <div class="auth-logo">
+          <span>🌿</span> Rootine
+        </div>
+
+        <h1 class="auth-title">Sign in</h1>
+        <p class="auth-subtitle">Return to your garden</p>
+
+        <div class="auth-error" id="auth-error"></div>
+
+        <!-- OAuth -->
+        <button class="btn-oauth" onclick="signInGoogle()">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+            <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
+            <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+            <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <div class="auth-divider"><span>or continue with email</span></div>
+
+        <div class="auth-form">
+          <div class="form-group">
+            <label class="form-label">Email address</label>
+            <input type="email" class="form-input" id="email" placeholder="you@example.com" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="password-wrap">
+              <input type="password" class="form-input" id="password" placeholder="Your password" autocomplete="current-password">
+              <button class="password-toggle" onclick="togglePassword()" type="button">👁</button>
+            </div>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+          <button class="btn-auth" onclick="handleSignIn()" id="signin-btn">
+            Sign In →
+          </button>
+        </div>
+
+        <p class="auth-switch">
+          Don't have an account? <a href="signup.html">Create one free →</a>
+        </p>
+
+        <p style="font-size:11px; color:var(--muted); margin-top:24px; text-align:center; line-height:1.6;">
+          By signing in you agree to our Terms of Service and Privacy Policy.
+          Demo mode works without an account — just visit the 
+          <a href="dashboard.html" style="color:var(--amber);">dashboard</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const pw = document.getElementById('password');
+      pw.type = pw.type === 'password' ? 'text' : 'password';
+    }
+
+    async function handleSignIn() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('signin-btn');
+      const errorEl = document.getElementById('auth-error');
+
+      if (!email || !password) {
+        errorEl.textContent = 'Please fill in all fields.';
+        errorEl.classList.add('show');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Signing in...';
+      errorEl.classList.remove('show');
+
+      // Demo: redirect to dashboard (replace with Supabase signIn)
+      // const { data, error } = await signIn(email, password);
+      // if (error) { show error; return; }
+      // window.location.href = 'dashboard.html';
+
+      // Simulated delay for demo
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 800);
+    }
+
+    async function signInGoogle() {
+      // Replace with: await signInWithGoogle();
+      window.location.href = 'dashboard.html';
+    }
+
+    // Enter key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleSignIn();
+    });
+  </script>
+</body>
+</html>

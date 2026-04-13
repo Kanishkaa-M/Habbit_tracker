@@ -1,0 +1,423 @@
+/* ===== HABITS.CSS ===== */
+
+/* Toolbar */
+.habits-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.search-input-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 13px;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.search-input:focus {
+  border-color: var(--amber);
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 4px;
+}
+
+.filter-tab {
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  color: var(--muted);
+  border: none;
+  background: transparent;
+  transition: all var(--transition);
+  letter-spacing: 0.3px;
+}
+
+.filter-tab.active {
+  background: var(--amber);
+  color: var(--bg);
+  font-weight: 500;
+}
+
+.filter-tab:hover:not(.active) {
+  color: var(--cream);
+}
+
+/* Habit Grid */
+.habits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Habit Card */
+.habit-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  transition: all var(--transition-slow);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.habit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green), var(--amber));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-slow);
+}
+
+.habit-card:hover {
+  border-color: var(--border-light);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+}
+
+.habit-card:hover::before {
+  transform: scaleX(1);
+}
+
+.habit-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.habit-card-icon {
+  font-size: 36px;
+  width: 56px;
+  height: 56px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+}
+
+.habit-card-actions {
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.habit-card:hover .habit-card-actions {
+  opacity: 1;
+}
+
+.card-action-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card2);
+  color: var(--muted);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+
+.card-action-btn:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.card-action-btn.danger:hover {
+  border-color: var(--rust);
+  color: var(--rust);
+}
+
+.habit-card-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--cream);
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+
+.habit-card-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Streak display */
+.habit-streak-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.streak-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.streak-num {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--amber);
+  letter-spacing: -0.5px;
+}
+
+.streak-lbl {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.streak-divider {
+  width: 1px;
+  height: 32px;
+  background: var(--border);
+}
+
+/* Mini heatmap */
+.mini-heatmap {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.heat-cell {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  transition: background var(--transition);
+}
+
+.heat-cell.low    { background: rgba(90, 122, 58, 0.3); }
+.heat-cell.mid    { background: rgba(90, 122, 58, 0.6); }
+.heat-cell.high   { background: var(--green); }
+.heat-cell.today  { border-color: var(--amber); }
+
+/* Check today button */
+.check-today-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+  background: transparent;
+  color: var(--cream-dim);
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.check-today-btn:hover {
+  background: var(--green-pale);
+  border-color: var(--green);
+  color: var(--green-light);
+}
+
+.check-today-btn.done {
+  background: rgba(90, 122, 58, 0.15);
+  border-color: var(--green);
+  color: var(--green-light);
+}
+
+/* Add Habit Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  width: 100%;
+  max-width: 480px;
+  transform: translateY(20px);
+  transition: transform var(--transition);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-overlay.open .modal {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--cream);
+  letter-spacing: -0.5px;
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+
+.modal-close:hover {
+  border-color: var(--rust);
+  color: var(--rust);
+}
+
+/* Emoji picker */
+.emoji-picker-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.emoji-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-card2);
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.emoji-btn:hover,
+.emoji-btn.selected {
+  border-color: var(--amber);
+  background: rgba(212, 168, 83, 0.1);
+  transform: scale(1.1);
+}
+
+/* Frequency selector */
+.frequency-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.freq-btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  transition: all var(--transition);
+}
+
+.freq-btn.active {
+  border-color: var(--amber);
+  color: var(--amber);
+  background: rgba(212, 168, 83, 0.1);
+}
+
+/* Empty state */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.empty-icon {
+  font-size: 60px;
+  margin-bottom: 24px;
+}
+
+.empty-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--cream);
+  margin-bottom: 12px;
+}
+
+.empty-text {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 640px) {
+  .habits-grid { grid-template-columns: 1fr; }
+  .modal { padding: 24px 20px; }
+}

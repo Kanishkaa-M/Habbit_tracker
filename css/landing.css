@@ -1,0 +1,400 @@
+/* ===== LANDING.CSS ===== */
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+  padding: 120px 80px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+}
+
+.blob-1 {
+  width: 500px;
+  height: 500px;
+  background: var(--green);
+  top: -100px;
+  left: -100px;
+  animation: float 8s ease-in-out infinite;
+}
+
+.blob-2 {
+  width: 400px;
+  height: 400px;
+  background: var(--amber-dark);
+  top: 200px;
+  right: -80px;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+.blob-3 {
+  width: 300px;
+  height: 300px;
+  background: var(--rust);
+  bottom: 0;
+  left: 40%;
+  animation: float 7s ease-in-out infinite 2s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-30px) scale(1.05); }
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(46, 46, 26, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46, 46, 26, 0.3) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at 30% 50%, black 20%, transparent 70%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(90, 122, 58, 0.2);
+  border: 1px solid rgba(90, 122, 58, 0.4);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  color: var(--green-light);
+  letter-spacing: 0.5px;
+  margin-bottom: 32px;
+  animation: fadeInUp 0.6s ease both;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 6vw, 80px);
+  line-height: 1.05;
+  letter-spacing: -2px;
+  color: var(--cream);
+  margin-bottom: 28px;
+  animation: fadeInUp 0.6s ease 0.1s both;
+}
+
+.hero-title em {
+  color: var(--amber);
+  font-style: italic;
+}
+
+.hero-subtitle {
+  font-size: 15px;
+  color: var(--cream-dim);
+  line-height: 1.8;
+  max-width: 440px;
+  margin-bottom: 40px;
+  animation: fadeInUp 0.6s ease 0.2s both;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.6s ease 0.3s both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Garden Demo Card */
+.hero-visual {
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.6s ease 0.2s both;
+}
+
+.garden-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  max-width: 380px;
+  margin-left: auto;
+}
+
+.garden-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.garden-date {
+  color: var(--amber);
+}
+
+.plant-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.plant-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.plant-item:hover {
+  border-color: var(--border-light);
+  transform: translateX(4px);
+}
+
+.plant-item.done {
+  border-color: rgba(90, 122, 58, 0.3);
+  background: rgba(90, 122, 58, 0.06);
+}
+
+.plant-icon {
+  font-size: 22px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+}
+
+.plant-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.plant-name {
+  font-size: 13px;
+  color: var(--cream);
+}
+
+.plant-streak {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.plant-check {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  background: var(--green);
+  color: var(--cream);
+  font-weight: 700;
+}
+
+.plant-check.pending {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--muted);
+}
+
+.garden-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progress-bar-wrap {
+  height: 4px;
+  background: var(--bg-card2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--amber));
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
+.progress-label {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+/* Features */
+.features {
+  padding: 100px 80px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 40px;
+  letter-spacing: -1px;
+  color: var(--cream);
+  margin-bottom: 56px;
+  text-align: center;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  transition: all var(--transition-slow);
+}
+
+.feature-card:hover {
+  border-color: var(--amber);
+  transform: translateY(-8px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+}
+
+.feature-icon {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--amber);
+  margin-bottom: 12px;
+}
+
+.feature-card p {
+  font-size: 13px;
+  color: var(--cream-dim);
+  line-height: 1.8;
+}
+
+/* CTA */
+.cta-section {
+  padding: 100px 80px;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 50%, rgba(90, 122, 58, 0.15) 0%, transparent 70%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.cta-content h2 {
+  font-family: var(--font-display);
+  font-size: 48px;
+  letter-spacing: -1.5px;
+  color: var(--cream);
+  margin-bottom: 16px;
+}
+
+.cta-content p {
+  color: var(--cream-dim);
+  font-size: 15px;
+  margin-bottom: 40px;
+}
+
+/* Footer */
+.footer {
+  padding: 48px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--amber);
+}
+
+.footer-links {
+  display: flex;
+  gap: 32px;
+}
+
+.footer-links a {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  transition: color var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--cream);
+}
+
+.footer-copy {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 100px 40px 60px;
+    text-align: center;
+  }
+  .hero-subtitle {
+    margin: 0 auto 40px;
+  }
+  .hero-actions {
+    justify-content: center;
+  }
+  .garden-card {
+    margin: 0 auto;
+  }
+  .features-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero { padding: 80px 20px 40px; }
+  .features, .cta-section, .footer { padding: 60px 20px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .cta-content h2 { font-size: 32px; }
+}

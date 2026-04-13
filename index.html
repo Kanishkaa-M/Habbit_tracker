@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rootine — Grow Your Habits</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/landing.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-logo">
+      <span class="logo-leaf">🌿</span>
+      <span class="logo-text">Rootine</span>
+    </div>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="habits.html" class="nav-link">My Habits</a>
+      <a href="analytics.html" class="nav-link">Growth</a>
+      <a href="login.html" class="btn-nav">Sign In</a>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
+  </nav>
+
+  <main class="hero">
+    <div class="hero-bg">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+      <div class="grid-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="badge">🌱 Your habits, your garden</div>
+      <h1 class="hero-title">
+        Small roots<br/>
+        <em>grow</em> big<br/>
+        forests.
+      </h1>
+      <p class="hero-subtitle">
+        Rootine is a habit tracker that treats your daily rituals like seeds — 
+        plant them, water them, watch them bloom into the life you want.
+      </p>
+      <div class="hero-actions">
+        <a href="signup.html" class="btn-primary">Start Growing →</a>
+        <a href="dashboard.html" class="btn-ghost">View Demo</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="garden-card">
+        <div class="garden-header">
+          <span>Today's Garden</span>
+          <span class="garden-date" id="today-date"></span>
+        </div>
+        <div class="plant-list">
+          <div class="plant-item done">
+            <div class="plant-icon">🌻</div>
+            <div class="plant-info">
+              <span class="plant-name">Morning Pages</span>
+              <span class="plant-streak">🔥 12 days</span>
+            </div>
+            <div class="plant-check">✓</div>
+          </div>
+          <div class="plant-item done">
+            <div class="plant-icon">🌿</div>
+            <div class="plant-info">
+              <span class="plant-name">10k Steps</span>
+              <span class="plant-streak">🔥 7 days</span>
+            </div>
+            <div class="plant-check">✓</div>
+          </div>
+          <div class="plant-item">
+            <div class="plant-icon">🍃</div>
+            <div class="plant-info">
+              <span class="plant-name">Read 30 mins</span>
+              <span class="plant-streak">⏳ Pending</span>
+            </div>
+            <div class="plant-check pending">○</div>
+          </div>
+          <div class="plant-item">
+            <div class="plant-icon">🌸</div>
+            <div class="plant-info">
+              <span class="plant-name">Meditate</span>
+              <span class="plant-streak">⏳ Pending</span>
+            </div>
+            <div class="plant-check pending">○</div>
+          </div>
+        </div>
+        <div class="garden-footer">
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" style="width: 50%"></div>
+          </div>
+          <span class="progress-label">2 of 4 watered today</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Features Section -->
+  <section class="features">
+    <h2 class="section-title">Why Rootine is different</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌱</div>
+        <h3>Habit Seeds</h3>
+        <p>Every habit starts as a seed. Watch it grow through stages — sprout, sapling, tree — as your streak lengthens.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Growth Analytics</h3>
+        <p>See your progress as a living garden map. Heatmaps, streak charts, and bloom calendars show your journey.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3>Gentle Reminders</h3>
+        <p>No guilt-tripping notifications. Just gentle nudges to water your garden before the day ends.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏆</div>
+        <h3>Season Challenges</h3>
+        <p>Join seasonal habit challenges. Compete with others or go solo and earn rare garden badges.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Ready to plant your first habit?</h2>
+      <p>Join thousands of growers building better lives, one day at a time.</p>
+      <a href="signup.html" class="btn-primary">Create Free Account</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-logo">🌿 Rootine</div>
+    <div class="footer-links">
+      <a href="#">About</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Contact</a>
+    </div>
+    <p class="footer-copy">© 2025 Rootine. Grow every day.</p>
+  </footer>
+
+  <script src="js/global.js"></script>
+  <script>
+    document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
+  </script>
+</body>
+</html>

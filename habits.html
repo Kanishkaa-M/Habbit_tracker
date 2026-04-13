@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Habits — Rootine</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/habits.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">
+      <a href="index.html" style="display:flex;align-items:center;gap:8px;">
+        <span class="logo-leaf">🌿</span>
+        <span class="logo-text">Rootine</span>
+      </a>
+    </div>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="habits.html" class="nav-link">My Habits</a>
+      <a href="analytics.html" class="nav-link">Growth</a>
+      <a href="login.html" class="btn-nav">Sign In</a>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
+  </nav>
+
+  <div class="page-wrapper">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Navigate</div>
+        <a href="dashboard.html" class="sidebar-link">
+          <span class="sidebar-icon">🏠</span> Dashboard
+        </a>
+        <a href="habits.html" class="sidebar-link active">
+          <span class="sidebar-icon">🌱</span> My Habits
+        </a>
+        <a href="analytics.html" class="sidebar-link">
+          <span class="sidebar-icon">📊</span> Growth Analytics
+        </a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Categories</div>
+        <a href="#" class="sidebar-link" data-filter="all" onclick="setFilter('all',this)">
+          <span class="sidebar-icon">🌿</span> All Habits
+        </a>
+        <a href="#" class="sidebar-link" data-filter="mind" onclick="setFilter('mind',this)">
+          <span class="sidebar-icon">🧠</span> Mind
+        </a>
+        <a href="#" class="sidebar-link" data-filter="body" onclick="setFilter('body',this)">
+          <span class="sidebar-icon">💪</span> Body
+        </a>
+        <a href="#" class="sidebar-link" data-filter="nutrition" onclick="setFilter('nutrition',this)">
+          <span class="sidebar-icon">🍎</span> Nutrition
+        </a>
+        <a href="#" class="sidebar-link" data-filter="work" onclick="setFilter('work',this)">
+          <span class="sidebar-icon">💼</span> Work
+        </a>
+        <a href="#" class="sidebar-link" data-filter="social" onclick="setFilter('social',this)">
+          <span class="sidebar-icon">🤝</span> Social
+        </a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Account</div>
+        <a href="profile.html" class="sidebar-link">
+          <span class="sidebar-icon">👤</span> Profile
+        </a>
+        <a href="login.html" class="sidebar-link">
+          <span class="sidebar-icon">→</span> Sign Out
+        </a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div>
+          <h1>My Habits 🌱</h1>
+          <p id="habits-count">Loading your garden...</p>
+        </div>
+        <button class="btn-primary" onclick="openModal()">+ Plant New Habit</button>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="habits-toolbar">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="search-input" placeholder="Search habits..." oninput="renderHabits()">
+        </div>
+        <div class="filter-tabs">
+          <button class="filter-tab active" onclick="setStatusFilter('all', this)">All</button>
+          <button class="filter-tab" onclick="setStatusFilter('done', this)">Done Today</button>
+          <button class="filter-tab" onclick="setStatusFilter('pending', this)">Pending</button>
+        </div>
+      </div>
+
+      <!-- Habits Grid -->
+      <div class="habits-grid" id="habits-grid">
+        <div style="grid-column:1/-1;text-align:center;padding:60px;">
+          <div class="loading-spinner"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add/Edit Modal -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal" id="habit-modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">Plant a New Habit</h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Choose an emoji</label>
+        <div class="emoji-picker-row" id="emoji-picker">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Habit Name</label>
+        <input type="text" class="form-input" id="habit-name" placeholder="e.g. Morning Pages">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Description (optional)</label>
+        <input type="text" class="form-input" id="habit-desc" placeholder="What does this habit involve?">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-input" id="habit-category">
+          <option value="mind">🧠 Mind</option>
+          <option value="body">💪 Body</option>
+          <option value="nutrition">🍎 Nutrition</option>
+          <option value="work">💼 Work</option>
+          <option value="social">🤝 Social</option>
+          <option value="creative">🎨 Creative</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Frequency</label>
+        <div class="frequency-row" id="freq-row">
+          <button class="freq-btn active" onclick="setFreq('daily', this)">Daily</button>
+          <button class="freq-btn" onclick="setFreq('weekdays', this)">Weekdays</button>
+          <button class="freq-btn" onclick="setFreq('weekends', this)">Weekends</button>
+          <button class="freq-btn" onclick="setFreq('weekly', this)">Weekly</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:8px;">
+        <button class="btn-ghost" onclick="closeModal()" style="flex:1;">Cancel</button>
+        <button class="btn-primary" onclick="saveHabit()" style="flex:2;" id="save-btn">🌱 Plant It</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="global-toast" class="toast"></div>
+
+  <script src="js/global.js"></script>
+  <script>
+    const EMOJIS = ['🌱','📓','🚶','📚','🧘','🚿','🍎','💪','🎯','✍️','🎨','🏃','🌙','💧','🥗','🎵','📝','🧠','💼','🤝','🌅','🏋️','🦷','🛏️','🌿','🌻','🍃','🌸'];
+    let selectedEmoji = '🌱';
+    let editingId = null;
+    let currentFilter = 'all';
+    let statusFilter = 'all';
+    let currentFreq = 'daily';
+
+    function initEmojiPicker() {
+      const picker = document.getElementById('emoji-picker');
+      picker.innerHTML = EMOJIS.map(e => `
+        <button class="emoji-btn ${e === selectedEmoji ? 'selected' : ''}" onclick="selectEmoji('${e}', this)">${e}</button>
+      `).join('');
+    }
+
+    function selectEmoji(emoji, btn) {
+      selectedEmoji = emoji;
+      document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function setFreq(f, btn) {
+      currentFreq = f;
+      document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function openModal(habitId = null) {
+      editingId = habitId;
+      initEmojiPicker();
+
+      if (habitId) {
+        const habit = localDB.getHabits().find(h => h.id === habitId);
+        document.getElementById('modal-title').textContent = 'Edit Habit';
+        document.getElementById('habit-name').value = habit.name;
+        document.getElementById('habit-desc').value = habit.desc || '';
+        document.getElementById('habit-category').value = habit.category;
+        selectedEmoji = habit.emoji;
+        currentFreq = habit.frequency;
+        document.getElementById('save-btn').textContent = '💾 Save Changes';
+        initEmojiPicker();
+        // Mark freq button
+        document.querySelectorAll('.freq-btn').forEach(b => {
+          b.classList.toggle('active', b.textContent.toLowerCase() === habit.frequency);
+        });
+      } else {
+        document.getElementById('modal-title').textContent = 'Plant a New Habit';
+        document.getElementById('habit-name').value = '';
+        document.getElementById('habit-desc').value = '';
+        document.getElementById('habit-category').value = 'mind';
+        document.getElementById('save-btn').textContent = '🌱 Plant It';
+        selectedEmoji = '🌱';
+        currentFreq = 'daily';
+        initEmojiPicker();
+        document.querySelectorAll('.freq-btn').forEach(b => b.classList.toggle('active', b.textContent === 'Daily'));
+      }
+
+      document.getElementById('modal-overlay').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('open');
+      editingId = null;
+    }
+
+    function closeModalOnOverlay(e) {
+      if (e.target === document.getElementById('modal-overlay')) closeModal();
+    }
+
+    function saveHabit() {
+      const name = document.getElementById('habit-name').value.trim();
+      if (!name) { showToast('Please give your habit a name 🌱', 'error'); return; }
+
+      const habits = localDB.getHabits();
+      const habitData = {
+        name,
+        emoji: selectedEmoji,
+        desc: document.getElementById('habit-desc').value.trim(),
+        category: document.getElementById('habit-category').value,
+        frequency: currentFreq,
+        created_at: new Date().toISOString().split('T')[0],
+      };
+
+      if (editingId) {
+        const idx = habits.findIndex(h => h.id === editingId);
+        habits[idx] = { ...habits[idx], ...habitData };
+        showToast('Habit updated! 🌿', 'success');
+      } else {
+        habitData.id = 'h_' + Date.now();
+        habits.unshift(habitData);
+        showToast('New habit planted! 🌱', 'success');
+      }
+
+      localDB.saveHabits(habits);
+      closeModal();
+      renderHabits();
+    }
+
+    function deleteHabit(id) {
+      if (!confirm('Remove this habit from your garden?')) return;
+      const habits = localDB.getHabits().filter(h => h.id !== id);
+      localDB.saveHabits(habits);
+      showToast('Habit removed 🍂', 'info');
+      renderHabits();
+    }
+
+    function setFilter(cat, el) {
+      currentFilter = cat;
+      document.querySelectorAll('[data-filter]').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+      renderHabits();
+    }
+
+    function setStatusFilter(f, btn) {
+      statusFilter = f;
+      document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderHabits();
+    }
+
+    function getMiniHeatmap(habitId) {
+      const cells = [];
+      for (let i = 27; i >= 0; i--) {
+        const date = daysAgo(i);
+        const done = localDB.isCompleted(habitId, date);
+        const isToday = i === 0;
+        cells.push(`<div class="heat-cell ${done ? 'high' : ''} ${isToday ? 'today' : ''}" title="${date}"></div>`);
+      }
+      return cells.join('');
+    }
+
+    function renderHabits() {
+      const search = document.getElementById('search-input').value.toLowerCase();
+      let habits = localDB.getHabits();
+      const today = todayStr();
+
+      if (currentFilter !== 'all') habits = habits.filter(h => h.category === currentFilter);
+      if (search) habits = habits.filter(h => h.name.toLowerCase().includes(search) || (h.desc || '').toLowerCase().includes(search));
+      if (statusFilter === 'done') habits = habits.filter(h => localDB.isCompleted(h.id, today));
+      if (statusFilter === 'pending') habits = habits.filter(h => !localDB.isCompleted(h.id, today));
+
+      document.getElementById('habits-count').textContent = `${habits.length} habit${habits.length !== 1 ? 's' : ''} in your garden`;
+
+      const grid = document.getElementById('habits-grid');
+
+      if (habits.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🌾</div>
+            <h3 class="empty-title">Your garden is empty</h3>
+            <p class="empty-text">Start by planting your first habit seed.</p>
+            <button class="btn-primary" onclick="openModal()">+ Plant a Habit</button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = habits.map(h => {
+        const done = localDB.isCompleted(h.id, today);
+        const streak = calcStreak(localDB.getCompletedDates(h.id));
+        const allDates = localDB.getCompletedDates(h.id);
+        const totalDone = allDates.length;
+        const daysSinceCreation = Math.max(1, Math.ceil((new Date() - new Date(h.created_at)) / (1000 * 60 * 60 * 24)));
+        const rate = Math.round((totalDone / daysSinceCreation) * 100);
+
+        return `
+          <div class="habit-card">
+            <div class="habit-card-header">
+              <div class="habit-card-icon">${h.emoji}</div>
+              <div class="habit-card-actions">
+                <button class="card-action-btn" title="Edit" onclick="openModal('${h.id}');event.stopPropagation()">✏️</button>
+                <button class="card-action-btn danger" title="Delete" onclick="deleteHabit('${h.id}');event.stopPropagation()">🗑</button>
+              </div>
+            </div>
+
+            <div class="habit-card-name">${h.name}</div>
+            ${h.desc ? `<div class="habit-card-desc">${h.desc}</div>` : ''}
+
+            <div class="habit-streak-row">
+              <div class="streak-block">
+                <span class="streak-num">🔥 ${streak}</span>
+                <span class="streak-lbl">Current</span>
+              </div>
+              <div class="streak-divider"></div>
+              <div class="streak-block">
+                <span class="streak-num">${totalDone}</span>
+                <span class="streak-lbl">Total</span>
+              </div>
+              <div class="streak-divider"></div>
+              <div class="streak-block">
+                <span class="streak-num">${rate}%</span>
+                <span class="streak-lbl">Rate</span>
+              </div>
+            </div>
+
+            <div class="mini-heatmap">${getMiniHeatmap(h.id)}</div>
+
+            <button class="check-today-btn ${done ? 'done' : ''}" onclick="toggleHabitCard('${h.id}', this)">
+              ${done ? '✓ Watered today!' : '💧 Water today'}
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleHabitCard(habitId, btn) {
+      const done = localDB.toggleCompletion(habitId, todayStr());
+      btn.classList.toggle('done', done);
+      btn.textContent = done ? '✓ Watered today!' : '💧 Water today';
+      showToast(done ? '💧 Watered!' : 'Unmarked', done ? 'success' : 'info');
+      renderHabits();
+    }
+
+    // Check for #add hash
+    if (window.location.hash === '#add') {
+      setTimeout(openModal, 300);
+    }
+
+    renderHabits();
+  </script>
+</body>
+</html>

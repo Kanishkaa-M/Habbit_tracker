@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — Rootine</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">
+      <a href="index.html" style="display:flex;align-items:center;gap:8px;">
+        <span class="logo-leaf">🌿</span>
+        <span class="logo-text">Rootine</span>
+      </a>
+    </div>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="habits.html" class="nav-link">My Habits</a>
+      <a href="analytics.html" class="nav-link">Growth</a>
+      <a href="login.html" class="btn-nav">Sign In</a>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
+  </nav>
+
+  <div class="page-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Navigate</div>
+        <a href="dashboard.html" class="sidebar-link active">
+          <span class="sidebar-icon">🏠</span> Dashboard
+        </a>
+        <a href="habits.html" class="sidebar-link">
+          <span class="sidebar-icon">🌱</span> My Habits
+        </a>
+        <a href="analytics.html" class="sidebar-link">
+          <span class="sidebar-icon">📊</span> Growth Analytics
+        </a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Quick Add</div>
+        <a href="habits.html#add" class="sidebar-link">
+          <span class="sidebar-icon">＋</span> New Habit
+        </a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Account</div>
+        <a href="profile.html" class="sidebar-link">
+          <span class="sidebar-icon">👤</span> Profile
+        </a>
+        <a href="login.html" class="sidebar-link" id="logout-link">
+          <span class="sidebar-icon">→</span> Sign Out
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content">
+      <!-- Quote -->
+      <div class="quote-strip">
+        <span class="quote-icon">🌿</span>
+        <span class="quote-text" id="daily-quote">Loading your daily seed of wisdom...</span>
+      </div>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 id="greeting">Good morning 🌅</h1>
+        <p id="header-date">Loading...</p>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">🌱</div>
+          <div class="stat-value" id="stat-habits">0</div>
+          <div class="stat-label">Active Habits</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔥</div>
+          <div class="stat-value" id="stat-streak">0</div>
+          <div class="stat-label">Longest Streak</div>
+          <div class="stat-change" id="stat-streak-label">days</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-value" id="stat-today">0%</div>
+          <div class="stat-label">Today's Progress</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🏆</div>
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-label">Total Check-ins</div>
+        </div>
+      </div>
+
+      <!-- Dashboard Grid -->
+      <div class="dashboard-grid">
+        <!-- Today's Habits -->
+        <div class="today-section">
+          <div class="section-header">
+            <h2>Today's Garden 🌻</h2>
+            <div class="today-progress">
+              <div class="today-bar">
+                <div class="today-bar-fill" id="today-bar" style="width: 0%"></div>
+              </div>
+              <span id="today-count">0 / 0</span>
+            </div>
+          </div>
+          <div class="habit-list" id="today-habit-list">
+            <div style="text-align:center; padding: 40px; color: var(--muted);">
+              <div class="loading-spinner"></div>
+              <p style="margin-top:12px;">Watering your garden...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <!-- Growth Ring -->
+          <div class="growth-panel">
+            <h2 style="font-family:var(--font-display); font-size: 18px; color: var(--cream);">Weekly Growth</h2>
+            <div class="ring-wrap">
+              <svg class="ring-svg" viewBox="0 0 140 140">
+                <defs>
+                  <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#5a7a3a"/>
+                    <stop offset="100%" stop-color="#d4a853"/>
+                  </linearGradient>
+                </defs>
+                <circle class="ring-bg" cx="70" cy="70" r="54"/>
+                <circle class="ring-fg" id="ring-circle" cx="70" cy="70" r="54"
+                  stroke-dasharray="339.3"
+                  stroke-dashoffset="339.3"
+                  transform="rotate(-90 70 70)"/>
+                <text class="ring-label ring-pct" id="ring-pct-text" x="70" y="66">0%</text>
+                <text class="ring-label ring-sub" x="70" y="84">this week</text>
+              </svg>
+              <div class="ring-title">Overall completion rate</div>
+            </div>
+
+            <!-- Summary -->
+            <div class="summary-row">
+              <div class="summary-item">
+                <div class="summary-num" id="sum-done">0</div>
+                <div class="summary-label">Done</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-num" id="sum-missed">0</div>
+                <div class="summary-label">Missed</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-num" id="sum-rate">0%</div>
+                <div class="summary-label">Rate</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming -->
+          <div class="growth-panel" style="flex:1;">
+            <div class="section-header" style="margin-bottom:16px;">
+              <h2 style="font-family:var(--font-display);font-size:18px;color:var(--cream);">Upcoming</h2>
+            </div>
+            <div class="upcoming-list" id="upcoming-list">
+              <!-- populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="global-toast" class="toast"></div>
+
+  <script src="js/global.js"></script>
+  <script>
+    // Quotes
+    const quotes = [
+      "We are what we repeatedly do. Excellence is not an act but a habit. — Aristotle",
+      "Small daily improvements over time lead to stunning results.",
+      "You'll never change your life until you change something you do daily.",
+      "Habits are the compound interest of self-improvement. — James Clear",
+      "The secret of your future is hidden in your daily routine.",
+      "Success is the sum of small efforts repeated day in and day out.",
+      "A year from now, you'll wish you started today.",
+    ];
+    document.getElementById('daily-quote').textContent = quotes[new Date().getDay() % quotes.length];
+
+    // Greeting
+    const hour = new Date().getHours();
+    const greetings = ['Good night', 'Good morning', 'Good afternoon', 'Good evening'];
+    const g = hour < 5 ? 0 : hour < 12 ? 1 : hour < 18 ? 2 : 3;
+    const emojis = ['🌙', '🌅', '☀️', '🌆'];
+    document.getElementById('greeting').textContent = `${greetings[g]} ${emojis[g]}`;
+    document.getElementById('header-date').textContent = new Date().toLocaleDateString('en-US', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    // Load and render habits
+    function render() {
+      const habits = localDB.getHabits();
+      const today = todayStr();
+      const completions = localDB.getCompletions();
+
+      // Stats
+      document.getElementById('stat-habits').textContent = habits.length;
+
+      let totalCheckIns = 0;
+      let longestStreak = 0;
+
+      habits.forEach(h => {
+        const dates = localDB.getCompletedDates(h.id);
+        totalCheckIns += dates.length;
+        const s = calcStreak(dates);
+        if (s > longestStreak) longestStreak = s;
+      });
+
+      document.getElementById('stat-total').textContent = totalCheckIns;
+      document.getElementById('stat-streak').textContent = longestStreak;
+
+      // Today
+      const completedToday = habits.filter(h => localDB.isCompleted(h.id, today));
+      const pct = habits.length ? Math.round((completedToday.length / habits.length) * 100) : 0;
+      document.getElementById('stat-today').textContent = `${pct}%`;
+      document.getElementById('today-bar').style.width = pct + '%';
+      document.getElementById('today-count').textContent = `${completedToday.length} / ${habits.length}`;
+
+      // Render habit list
+      const list = document.getElementById('today-habit-list');
+      if (habits.length === 0) {
+        list.innerHTML = `<div style="text-align:center;padding:40px;color:var(--muted);">
+          <div style="font-size:40px;margin-bottom:12px;">🌱</div>
+          <p>No habits yet. <a href="habits.html" style="color:var(--amber);">Plant your first one →</a></p>
+        </div>`;
+      } else {
+        list.innerHTML = habits.map(h => {
+          const done = localDB.isCompleted(h.id, today);
+          const streak = calcStreak(localDB.getCompletedDates(h.id));
+          return `
+            <div class="habit-item-row ${done ? 'completed' : ''}" onclick="toggleHabit('${h.id}')">
+              <div class="habit-emoji">${h.emoji}</div>
+              <div class="habit-meta">
+                <div class="habit-name">${h.name}</div>
+                <div class="habit-tags">
+                  <span class="habit-tag">${h.category}</span>
+                </div>
+              </div>
+              <div class="habit-streak-badge">🔥 ${streak}d</div>
+              <button class="habit-check-btn">${done ? '✓' : ''}</button>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Weekly ring
+      const weekDone = [];
+      const weekTotal = habits.length * 7;
+      for (let i = 0; i < 7; i++) {
+        habits.forEach(h => {
+          if (localDB.isCompleted(h.id, daysAgo(i))) weekDone.push(1);
+        });
+      }
+      const weekPct = weekTotal > 0 ? Math.round((weekDone.length / weekTotal) * 100) : 0;
+      const circumference = 339.3;
+      const offset = circumference - (circumference * weekPct / 100);
+      document.getElementById('ring-circle').style.strokeDashoffset = offset;
+      document.getElementById('ring-pct-text').textContent = weekPct + '%';
+
+      document.getElementById('sum-done').textContent = weekDone.length;
+      document.getElementById('sum-missed').textContent = weekTotal - weekDone.length;
+      document.getElementById('sum-rate').textContent = weekPct + '%';
+
+      // Upcoming (incomplete habits for today)
+      const upcomingHabits = habits.filter(h => !localDB.isCompleted(h.id, today));
+      const upcomingList = document.getElementById('upcoming-list');
+      if (upcomingHabits.length === 0) {
+        upcomingList.innerHTML = `<p style="font-size:13px;color:var(--green-light);text-align:center;padding:20px;">🎉 All done for today!</p>`;
+      } else {
+        upcomingList.innerHTML = upcomingHabits.slice(0, 5).map(h => `
+          <div class="upcoming-item">
+            <div class="upcoming-dot"></div>
+            <span>${h.emoji} ${h.name}</span>
+            <span>${h.frequency}</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    function toggleHabit(habitId) {
+      const done = localDB.toggleCompletion(habitId, todayStr());
+      showToast(done ? '🌱 Habit watered!' : 'Habit unchecked', done ? 'success' : 'info');
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>

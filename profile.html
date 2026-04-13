@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile — Rootine</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 24px;
+    }
+
+    .profile-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 24px;
+      text-align: center;
+      position: sticky;
+      top: 90px;
+      height: fit-content;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), var(--amber));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      border: 3px solid var(--border-light);
+    }
+
+    .avatar-edit {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--amber);
+      border: 2px solid var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .profile-name {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--cream);
+      margin-bottom: 4px;
+    }
+
+    .profile-email {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .profile-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .profile-badge {
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      background: rgba(212, 168, 83, 0.1);
+      border: 1px solid rgba(212, 168, 83, 0.3);
+      color: var(--amber);
+    }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .p-stat {
+      padding: 14px;
+      background: var(--bg-card2);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .p-stat-num {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--amber);
+    }
+
+    .p-stat-label {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Settings */
+    .settings-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .settings-section h2 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      color: var(--cream);
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .setting-row:last-child {
+      border-bottom: none;
+    }
+
+    .setting-info h4 {
+      font-size: 14px;
+      color: var(--cream);
+      margin-bottom: 3px;
+    }
+
+    .setting-info p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Toggle Switch */
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: var(--bg-card2);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      left: 2px;
+      top: 2px;
+      background: var(--muted);
+      border-radius: 50%;
+      transition: all var(--transition);
+    }
+
+    .toggle input:checked + .toggle-slider {
+      background: rgba(90, 122, 58, 0.3);
+      border-color: var(--green);
+    }
+
+    .toggle input:checked + .toggle-slider::before {
+      transform: translateX(20px);
+      background: var(--green-light);
+    }
+
+    .danger-zone {
+      background: rgba(176, 90, 48, 0.06);
+      border-color: rgba(176, 90, 48, 0.3);
+    }
+
+    .btn-danger {
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid var(--rust);
+      border-radius: var(--radius);
+      color: var(--rust);
+      font-family: var(--font-body);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .btn-danger:hover {
+      background: rgba(176, 90, 48, 0.1);
+    }
+
+    @media (max-width: 900px) {
+      .profile-grid { grid-template-columns: 1fr; }
+      .profile-card { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">
+      <a href="index.html" style="display:flex;align-items:center;gap:8px;">
+        <span class="logo-leaf">🌿</span>
+        <span class="logo-text">Rootine</span>
+      </a>
+    </div>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="habits.html" class="nav-link">My Habits</a>
+      <a href="analytics.html" class="nav-link">Growth</a>
+      <a href="login.html" class="btn-nav">Sign In</a>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
+  </nav>
+
+  <div class="page-wrapper">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Navigate</div>
+        <a href="dashboard.html" class="sidebar-link">
+          <span class="sidebar-icon">🏠</span> Dashboard
+        </a>
+        <a href="habits.html" class="sidebar-link">
+          <span class="sidebar-icon">🌱</span> My Habits
+        </a>
+        <a href="analytics.html" class="sidebar-link">
+          <span class="sidebar-icon">📊</span> Growth Analytics
+        </a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Account</div>
+        <a href="profile.html" class="sidebar-link active">
+          <span class="sidebar-icon">👤</span> Profile
+        </a>
+        <a href="login.html" class="sidebar-link">
+          <span class="sidebar-icon">→</span> Sign Out
+        </a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="page-header">
+        <h1>Profile & Settings 👤</h1>
+        <p>Manage your garden identity</p>
+      </div>
+
+      <div class="profile-grid">
+        <!-- Profile Card -->
+        <div class="profile-card">
+          <div class="avatar-wrap">
+            <div class="avatar">🌿</div>
+            <div class="avatar-edit">✏️</div>
+          </div>
+          <div class="profile-name" id="profile-name">Demo Grower</div>
+          <div class="profile-email">demo@rootine.app</div>
+
+          <div class="profile-badges">
+            <span class="profile-badge">🌱 Seedling</span>
+            <span class="profile-badge">🔥 7-Day Streak</span>
+            <span class="profile-badge">📚 Reader</span>
+          </div>
+
+          <div class="profile-stats" id="profile-stats">
+            <div class="p-stat">
+              <div class="p-stat-num" id="ps-habits">0</div>
+              <div class="p-stat-label">Habits</div>
+            </div>
+            <div class="p-stat">
+              <div class="p-stat-num" id="ps-streak">0</div>
+              <div class="p-stat-label">Best Streak</div>
+            </div>
+            <div class="p-stat">
+              <div class="p-stat-num" id="ps-checkins">0</div>
+              <div class="p-stat-label">Check-ins</div>
+            </div>
+            <div class="p-stat">
+              <div class="p-stat-num" id="ps-rate">0%</div>
+              <div class="p-stat-label">Avg Rate</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings -->
+        <div>
+          <!-- Edit Profile -->
+          <div class="settings-section">
+            <h2>Edit Profile</h2>
+            <div class="form-group">
+              <label class="form-label">Display Name</label>
+              <input type="text" class="form-input" id="name-input" value="Demo Grower">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" value="demo@rootine.app" disabled style="opacity:0.5">
+            </div>
+            <div class="form-group">
+              <label class="form-label">New Password (leave blank to keep current)</label>
+              <input type="password" class="form-input" placeholder="New password...">
+            </div>
+            <button class="btn-primary" onclick="saveProfile()">Save Changes</button>
+          </div>
+
+          <!-- Notifications -->
+          <div class="settings-section">
+            <h2>Notifications & Reminders</h2>
+            <div class="setting-row">
+              <div class="setting-info">
+                <h4>Daily Garden Reminder</h4>
+                <p>Get notified if you haven't watered your habits by evening</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" checked id="notif-daily">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-info">
+                <h4>Streak At-Risk Alert</h4>
+                <p>Alert when a streak is about to break</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" checked id="notif-streak">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-info">
+                <h4>Weekly Summary</h4>
+                <p>Sunday digest of your growth progress</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="notif-weekly">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Appearance -->
+          <div class="settings-section">
+            <h2>Appearance</h2>
+            <div class="setting-row">
+              <div class="setting-info">
+                <h4>Theme</h4>
+                <p>Currently using: Dark Botanical</p>
+              </div>
+              <select class="form-input" style="width:auto;">
+                <option>🌿 Dark Botanical</option>
+                <option>☀️ Light Garden (coming soon)</option>
+              </select>
+            </div>
+            <div class="setting-row">
+              <div class="setting-info">
+                <h4>Compact Mode</h4>
+                <p>Denser habit list for power users</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="compact-mode">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="settings-section danger-zone">
+            <h2 style="color:var(--rust); border-color: rgba(176, 90, 48, 0.3);">Danger Zone</h2>
+            <div class="setting-row">
+              <div class="setting-info">
+                <h4>Export Data</h4>
+                <p>Download all your habits and history as JSON</p>
+              </div>
+              <button class="btn-danger" onclick="exportData()">Export JSON</button>
+            </div>
+            <div class="setting-row">
+              <div class="setting-info">
+                <h4>Clear Demo Data</h4>
+                <p>Remove all local demo habits and start fresh</p>
+              </div>
+              <button class="btn-danger" onclick="clearData()">Clear Data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="global-toast" class="toast"></div>
+
+  <script src="js/global.js"></script>
+  <script>
+    // Load stats
+    function loadProfileStats() {
+      const habits = localDB.getHabits();
+      document.getElementById('ps-habits').textContent = habits.length;
+
+      let total = 0, bestStreak = 0;
+      habits.forEach(h => {
+        const dates = localDB.getCompletedDates(h.id);
+        total += dates.length;
+        const s = calcStreak(dates);
+        if (s > bestStreak) bestStreak = s;
+      });
+
+      const possible = habits.length * 30;
+      document.getElementById('ps-checkins').textContent = total;
+      document.getElementById('ps-streak').textContent = bestStreak;
+      document.getElementById('ps-rate').textContent = possible > 0 ? Math.round((total / possible) * 100) + '%' : '0%';
+    }
+
+    function saveProfile() {
+      const name = document.getElementById('name-input').value.trim();
+      document.getElementById('profile-name').textContent = name || 'Grower';
+      showToast('Profile updated! 🌿', 'success');
+    }
+
+    function exportData() {
+      const data = {
+        habits: localDB.getHabits(),
+        completions: localDB.getCompletions(),
+        exported_at: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `rootine-export-${todayStr()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Data exported! 📦', 'success');
+    }
+
+    function clearData() {
+      if (!confirm('This will remove all local habits and completions. Are you sure?')) return;
+      localStorage.removeItem('rootine_habits');
+      localStorage.removeItem('rootine_completions');
+      showToast('Data cleared. Refresh to see changes. 🍂', 'info');
+    }
+
+    loadProfileStats();
+  </script>
+</body>
+</html>
