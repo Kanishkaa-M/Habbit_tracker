@@ -4,22 +4,22 @@
 
 :root {
   /* Colors */
-  --bg:           #0f0f08;
-  --bg-card:      #1a1a0e;
-  --bg-card2:     #222214;
-  --border:       #2e2e1a;
-  --border-light: #3d3d22;
+  --bg:           #f5f1e8;
+  --bg-card:      #fffdf8;
+  --bg-card2:     #f0ead9;
+  --border:       #d8c9a7;
+  --border-light: #e6dcc1;
 
-  --amber:        #d4a853;
-  --amber-light:  #e8c47a;
-  --amber-dark:   #9d7a35;
-  --green:        #5a7a3a;
-  --green-light:  #7aaa50;
-  --green-pale:   #3a4a22;
-  --rust:         #b05a30;
-  --cream:        #f0e8cc;
-  --cream-dim:    #c8bc9a;
-  --muted:        #6a6a50;
+  --amber:        #c78a2d;
+  --amber-light:  #e1b865;
+  --amber-dark:   #9b6d20;
+  --green:        #4c7d50;
+  --green-light:  #6a9a6d;
+  --green-pale:   #ebf4e4;
+  --rust:         #b85a37;
+  --cream:        #1b2a1d;
+  --cream-dim:    #536458;
+  --muted:        #6e7c6d;
 
   /* Typography */
   --font-display: 'Playfair Display', Georgia, serif;
